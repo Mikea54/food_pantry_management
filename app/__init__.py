@@ -25,6 +25,8 @@ def create_app():
     from .auth import auth_bp
     from .admin import admin_bp
     from .user import user_bp
+    # Register the main blueprint containing the index route
+    app.register_blueprint(bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(user_bp)
