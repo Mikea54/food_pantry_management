@@ -1,11 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # Initialize SQLAlchemy instance
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     """User model for authentication and roles."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -15,4 +16,8 @@ class User(db.Model):
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        """Return ``True`` if the provided password matches the stored hash."""
+        return check_password_hash(self.password_hash, password)
 
