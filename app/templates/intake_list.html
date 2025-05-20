@@ -1,0 +1,25 @@
+<!doctype html>
+<title>Households</title>
+<h1>Households</h1>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+    </tr>
+    {% for hh in households.items %}
+    <tr>
+        <td><a href="{{ url_for('intake.household_detail', household_id=hh.id) }}">{{ hh.id }}</a></td>
+        <td>{{ hh.name }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<div>
+    {% if households.has_prev %}
+        <a href="{{ url_for('intake.list_households', page=households.prev_num) }}">Prev</a>
+    {% endif %}
+    Page {{ households.page }} of {{ households.pages }}
+    {% if households.has_next %}
+        <a href="{{ url_for('intake.list_households', page=households.next_num) }}">Next</a>
+    {% endif %}
+</div>
+<a href="{{ url_for('intake.new_household') }}">Create New Household</a>

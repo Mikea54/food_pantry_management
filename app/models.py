@@ -25,3 +25,17 @@ class Household(db.Model):
     address = db.Column(db.String(200))
     eligibility_status = db.Column(db.String(50))
     member_count = db.Column(db.Integer, default=1)
+
+    members = db.relationship(
+        "HouseholdMember",
+        backref="household",
+        cascade="all, delete-orphan",
+    )
+
+
+class HouseholdMember(db.Model):
+    """Individual member belonging to a household."""
+
+    id = db.Column(db.Integer, primary_key=True)
+    household_id = db.Column(db.Integer, db.ForeignKey("household.id"), nullable=False)
+    name = db.Column(db.String(150), nullable=False)
