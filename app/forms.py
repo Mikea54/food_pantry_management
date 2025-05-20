@@ -12,17 +12,27 @@ class UserRegistrationForm(FlaskForm):
                         validators=[DataRequired()])
     submit = SubmitField('Create User')
 
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
-class HouseholdIntakeForm(FlaskForm):
-    """Collect basic household information."""
+class HouseholdForm(FlaskForm):
+    """Form for creating or editing a household."""
+    name = StringField('Head of Household', validators=[DataRequired()])
+    submit = SubmitField('Save')
 
-    head_name = StringField('Head of Household', validators=[DataRequired()])
-    phone = StringField('Phone', validators=[DataRequired()])
-    address = StringField('Address', validators=[DataRequired()])
-    eligibility = StringField('Eligibility', validators=[DataRequired()])
 
-    member1_name = StringField('Household Member 1')
-    member2_name = StringField('Household Member 2')
-    member3_name = StringField('Household Member 3')
+class HouseholdMemberForm(FlaskForm):
+    """Simple form to add a household member."""
+    name = StringField('Name', validators=[DataRequired()])
+    submit = SubmitField('Add Member')
 
-    submit = SubmitField('Submit')
+from wtforms import FieldList, FormField
+
+class HouseholdMemberSubForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+
+class ExtendedHouseholdForm(FlaskForm):
+    name = StringField('Head of Household', validators=[DataRequired()])
+    members = FieldList(FormField(HouseholdMemberSubForm), min_entries=1, max_entries=10)
+    submit = SubmitField('Save')

@@ -14,3 +14,24 @@ class User(UserMixin, db.Model):
 
 def get_user_by_email(email: str) -> 'User | None':
     return User.query.filter_by(email=email).first()
+
+
+class Household(db.Model):
+    """Represents a household registered during intake."""
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), nullable=False)
+
+    members = db.relationship(
+        "HouseholdMember",
+        backref="household",
+        cascade="all, delete-orphan",
+    )
+
+
+class HouseholdMember(db.Model):
+    """Individual member belonging to a household."""
+
+    id = db.Column(db.Integer, primary_key=True)
+    household_id = db.Column(db.Integer, db.ForeignKey("household.id"), nullable=False)
+    name = db.Column(db.String(150), nullable=False)
