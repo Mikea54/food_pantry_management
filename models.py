@@ -1,11 +1,14 @@
+"""Database models used in the tests and example application."""
+
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # Initialize SQLAlchemy instance
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     """User model for authentication and roles."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -13,6 +16,19 @@ class User(db.Model):
     password_hash = db.Column(db.String(128), nullable=False)
     role = db.Column(db.String(50), default='staff')  # [admin, staff, volunteer]
 
-    def set_password(self, password):
+    def set_password(self, password: str) -> None:
+        """Hash and store the user's password."""
         self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password: str) -> bool:
+        """Return ``True`` if the given password matches this user."""
+        return check_password_hash(self.password_hash, password)
+
+    def __repr__(self) -> str:  # pragma: no cover - simple debug representation
+        return f"<User {self.email}>"
+
+
+def get_user_by_email(email: str) -> "User | None":
+    """Convenience helper to fetch a ``User`` by email."""
+    return User.query.filter_by(email=email).first()
 
