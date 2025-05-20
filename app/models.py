@@ -17,10 +17,14 @@ def get_user_by_email(email: str) -> 'User | None':
 
 
 class Household(db.Model):
-    """Represents a household registered during intake."""
+    """Model storing household information for pantry clients."""
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(150), nullable=False)
+    head_name = db.Column(db.String(150), nullable=False)
+    contact_phone = db.Column(db.String(50))
+    address = db.Column(db.String(200))
+    eligibility_status = db.Column(db.String(50))
+    member_count = db.Column(db.Integer, default=1)
 
     members = db.relationship(
         "HouseholdMember",

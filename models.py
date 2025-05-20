@@ -33,17 +33,22 @@ def get_user_by_email(email: str) -> "User | None":
 
 
 class Household(db.Model):
+    """Model storing household information for pantry clients."""
+
     id = db.Column(db.Integer, primary_key=True)
-    head_name = db.Column(db.String(100), nullable=False)
-    contact_phone = db.Column(db.String(20))
+    head_name = db.Column(db.String(150), nullable=False)
+    contact_phone = db.Column(db.String(50))
     address = db.Column(db.String(200))
-    eligibility_status = db.Column(db.String(50))  # [PLACEHOLDER: criteria list]
+    eligibility_status = db.Column(db.String(50))
+    member_count = db.Column(db.Integer, default=1)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    members = db.relationship('HouseholdMember', backref='household', lazy=True)
+    members = db.relationship('HouseholdMember', backref='household', lazy=True, cascade="all, delete-orphan")
 
 
 class HouseholdMember(db.Model):
+    """Individual member belonging to a household."""
+
     id = db.Column(db.Integer, primary_key=True)
     household_id = db.Column(db.Integer, db.ForeignKey('household.id'), nullable=False)
     name = db.Column(db.String(100))
