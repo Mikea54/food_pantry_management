@@ -10,6 +10,7 @@ This project contains a small Flask application demonstrating user authenticatio
 - Admin area for creating users
 - User dashboard page
 - Role protected decorators in `pantry/decorators.py`
+- Household intake management with simple CRUD views
 
 ## Setup
 
@@ -47,6 +48,9 @@ The main routes are:
 - `/dashboard` – user dashboard (requires login)
 - `/admin` – admin dashboard (requires admin role)
 - `/admin/users/new` – form to create new users
+- `/intake` – list households
+- `/intake/new` – register a household
+- `/intake/<id>` – edit a household and members
 
 ## Tests
 

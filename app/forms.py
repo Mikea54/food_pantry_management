@@ -11,3 +11,17 @@ class UserRegistrationForm(FlaskForm):
                                         ('volunteer', 'Volunteer')],
                         validators=[DataRequired()])
     submit = SubmitField('Create User')
+
+
+class HouseholdForm(FlaskForm):
+    """Form for creating or editing a household."""
+
+    name = StringField('Head of Household', validators=[DataRequired()])
+    submit = SubmitField('Save')
+
+
+class HouseholdMemberForm(FlaskForm):
+    """Simple form to add a household member."""
+
+    name = StringField('Name', validators=[DataRequired()])
+    submit = SubmitField('Add Member')
