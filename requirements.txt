@@ -1,0 +1,10 @@
+Flask
+Flask-Login
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-WTF
+WTForms
+SQLAlchemy
+Werkzeug
+psycopg2-binary
+pytest
