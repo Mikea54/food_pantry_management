@@ -30,4 +30,6 @@ def create_user():
         db.session.commit()
         flash('User created successfully', 'success')
         return redirect(url_for('admin.index'))
+    elif request.method == 'POST':
+        flash('Please correct the errors in the form.', 'error')
     return render_template('admin_new_user.html', form=form)
