@@ -5,7 +5,6 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # Initialize SQLAlchemy instance
-
 db = SQLAlchemy()
 
 class User(UserMixin, db.Model):
@@ -27,8 +26,6 @@ class User(UserMixin, db.Model):
     def __repr__(self) -> str:  # pragma: no cover - simple debug representation
         return f"<User {self.email}>"
 
-
 def get_user_by_email(email: str) -> "User | None":
     """Convenience helper to fetch a ``User`` by email."""
     return User.query.filter_by(email=email).first()
-
