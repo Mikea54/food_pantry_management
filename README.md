@@ -47,6 +47,7 @@ The main routes are:
 - `/dashboard` – user dashboard (requires login)
 - `/admin` – admin dashboard (requires admin role)
 - `/admin/users/new` – form to create new users
+- `/intake` – household intake form
 
 ## Tests
 
