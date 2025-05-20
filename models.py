@@ -3,6 +3,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 # Initialize SQLAlchemy instance
 db = SQLAlchemy()
@@ -29,3 +30,22 @@ class User(UserMixin, db.Model):
 def get_user_by_email(email: str) -> "User | None":
     """Convenience helper to fetch a ``User`` by email."""
     return User.query.filter_by(email=email).first()
+
+
+class Household(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    head_name = db.Column(db.String(100), nullable=False)
+    contact_phone = db.Column(db.String(20))
+    address = db.Column(db.String(200))
+    eligibility_status = db.Column(db.String(50))  # [PLACEHOLDER: criteria list]
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    members = db.relationship('HouseholdMember', backref='household', lazy=True)
+
+
+class HouseholdMember(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    household_id = db.Column(db.Integer, db.ForeignKey('household.id'), nullable=False)
+    name = db.Column(db.String(100))
+    age = db.Column(db.Integer)
+    relation = db.Column(db.String(50))
