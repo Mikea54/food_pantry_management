@@ -24,6 +24,8 @@ def new_household():
         db.session.commit()
         flash('Household created', 'success')
         return redirect(url_for('intake.household_detail', household_id=household.id))
+    elif request.method == 'POST':
+        flash('Please correct the errors in the form.', 'error')
     return render_template('intake_new.html', form=form)
 
 @intake_bp.route('/intake/<int:household_id>', methods=['GET', 'POST'])
@@ -37,11 +39,16 @@ def household_detail(household_id):
         db.session.commit()
         flash('Household updated', 'success')
         return redirect(url_for('intake.household_detail', household_id=household.id))
+    elif form.submit.data and request.method == 'POST':
+        flash('Error updating household.', 'error')
+
     if member_form.submit.data and member_form.validate_on_submit():
         member = HouseholdMember(name=member_form.name.data, household=household)
         db.session.add(member)
         db.session.commit()
         flash('Member added', 'success')
         return redirect(url_for('intake.household_detail', household_id=household.id))
+    elif member_form.submit.data and request.method == 'POST':
+        flash('Error adding member.', 'error')
     members = HouseholdMember.query.filter_by(household_id=household.id).all()
     return render_template('intake_detail.html', form=form, member_form=member_form, household=household, members=members)

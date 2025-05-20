@@ -14,3 +14,6 @@ class Config:
     REMEMBER_COOKIE_HTTPONLY = True
     REMEMBER_COOKIE_SECURE = True
     REMEMBER_COOKIE_SAMESITE = 'Lax'
+
+    # Placeholder: eligibility criteria options will be loaded dynamically in the future
+    ELIGIBILITY_CRITERIA = ['eligible', 'ineligible']  # [PLACEHOLDER]
