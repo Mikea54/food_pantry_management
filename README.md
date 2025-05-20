@@ -1,23 +1,62 @@
-# food_pantry_management
+# Food Pantry Management
 
-Non-profit Food Pantry Management System
+This project contains a small Flask application demonstrating user authentication and role based access control for a food pantry. It is intended as a learning example and includes tests for the basic models and decorators.
 
-## Database Migrations
-This project uses Flask-Migrate with a PostgreSQL database. After installing dependencies, set the `DATABASE_URL` environment variable or ensure Postgres is running locally and initialize the migration repository with:
+## Features
+
+- Flask application structured as a package in `app/` with blueprints
+- Login and logout views with Flask-Login
+- `User` model using SQLAlchemy with roles (`admin`, `user`, `staff`, `volunteer`)
+- Admin area for creating users
+- User dashboard page
+- Role protected decorators in `pantry/decorators.py`
+
+## Setup
+
+1. Create a virtual environment and install dependencies:
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
+
+2. By default the application uses SQLite and stores data in `pantry.db`. To use another database set the `DATABASE_URL` environment variable.
+
+3. Initialize the database (only required the first time):
+
+   ```bash
+   flask db init
+   flask db migrate -m "create user table"
+   flask db upgrade
+   ```
+
+## Running the App
+
+Run the development server with:
 
 ```bash
-flask db init
-flask db migrate -m "create user table"
-flask db upgrade
+python run.py
 ```
 
-This repo contains a simple Flask application demonstrating role-based
-access control. The decorators in `pantry/decorators.py` provide helper
-wrappers to ensure that a user has the correct role before accessing a
-view. The included `admin_required`, `staff_required`, and
-`volunteer_required` decorators can be applied to any route.
+The main routes are:
 
-Run the application with `python app.py` and visit `/login/<role>` to
-simulate logging in as a user. The admin dashboard located at
-`/admin/dashboard` is protected with `@admin_required`.
+- `/` – simple greeting
+- `/login` – log in with email and password
+- `/logout` – log out the current user
+- `/dashboard` – user dashboard (requires login)
+- `/admin` – admin dashboard (requires admin role)
+- `/admin/users/new` – form to create new users
+
+## Tests
+
+The repository includes basic tests for user creation, password hashing and role
+checking. Run them with:
+
+```bash
+pytest
+```
+
+
+
 
