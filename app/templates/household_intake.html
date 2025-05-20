@@ -1,0 +1,35 @@
+<!doctype html>
+<title>Household Intake</title>
+<h1>Household Intake Form</h1>
+<form method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.head_name.label }}<br>
+        {{ form.head_name(size=32) }}
+    </p>
+    <p>
+        {{ form.phone.label }}<br>
+        {{ form.phone(size=20) }}
+    </p>
+    <p>
+        {{ form.address.label }}<br>
+        {{ form.address(size=64) }}
+    </p>
+    <p>
+        {{ form.eligibility.label }}<br>
+        {{ form.eligibility(size=32) }}
+    </p>
+    <p>{{ form.member1_name.label }}<br>{{ form.member1_name(size=32) }}</p>
+    <p>{{ form.member2_name.label }}<br>{{ form.member2_name(size=32) }}</p>
+    <p>{{ form.member3_name.label }}<br>{{ form.member3_name(size=32) }}</p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul>
+    {% for category, message in messages %}
+      <li>{{ category }} - {{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}

@@ -1,0 +1,35 @@
+<!doctype html>
+<title>Household Detail</title>
+<h1>Household {{ household.id }}</h1>
+<form method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.name.label }}<br>
+        {{ form.name(size=32) }}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+<h2>Members</h2>
+<ul>
+    {% for m in members %}
+        <li>{{ m.name }}</li>
+    {% endfor %}
+</ul>
+<form method="post">
+    {{ member_form.hidden_tag() }}
+    <p>
+        {{ member_form.name.label }}<br>
+        {{ member_form.name(size=32) }}
+    </p>
+    <p>{{ member_form.submit() }}</p>
+</form>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul>
+    {% for category, message in messages %}
+      <li>{{ category }} - {{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<a href="{{ url_for('intake.list_households') }}">Back to list</a>
