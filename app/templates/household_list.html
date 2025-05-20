@@ -1,0 +1,22 @@
+<!doctype html>
+<title>Households</title>
+<h1>Household List</h1>
+<a href="{{ url_for('household.export_households_csv') }}">Export CSV</a>
+<table border="1">
+    <tr>
+        <th>Head Name</th>
+        <th>Contact Phone</th>
+        <th>Address</th>
+        <th>Eligibility Status</th>
+        <th>Member Count</th>
+    </tr>
+    {% for h in households %}
+    <tr>
+        <td>{{ h.head_name }}</td>
+        <td>{{ h.contact_phone }}</td>
+        <td>{{ h.address }}</td>
+        <td>{{ h.eligibility_status }}</td>
+        <td>{{ h.member_count }}</td>
+    </tr>
+    {% endfor %}
+</table>
