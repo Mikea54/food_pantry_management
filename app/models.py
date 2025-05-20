@@ -10,3 +10,7 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password: str) -> bool:
         return check_password_hash(self.password_hash, password)
+
+
+def get_user_by_email(email: str) -> 'User | None':
+    return User.query.filter_by(email=email).first()
