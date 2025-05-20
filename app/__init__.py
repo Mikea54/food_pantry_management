@@ -1,10 +1,8 @@
 from flask import Flask
-from flask_login import LoginManager
+from .extensions import db, login_manager
 from .models import User
 from .routes import bp
 from config import Config
-
-login_manager = LoginManager()
 
 def create_app():
     app = Flask(__name__)
