@@ -7,14 +7,12 @@ from .forms import HouseholdForm, HouseholdMemberForm
 
 intake_bp = Blueprint('intake', __name__)
 
-
 @intake_bp.route('/intake')
 @login_required
 def list_households():
     page = request.args.get('page', 1, type=int)
     households = Household.query.paginate(page=page, per_page=10)
     return render_template('intake_list.html', households=households)
-
 
 @intake_bp.route('/intake/new', methods=['GET', 'POST'])
 @login_required
@@ -27,7 +25,6 @@ def new_household():
         flash('Household created', 'success')
         return redirect(url_for('intake.household_detail', household_id=household.id))
     return render_template('intake_new.html', form=form)
-
 
 @intake_bp.route('/intake/<int:household_id>', methods=['GET', 'POST'])
 @login_required

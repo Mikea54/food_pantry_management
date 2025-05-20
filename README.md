@@ -51,6 +51,8 @@ The main routes are:
 - `/intake` – list households
 - `/intake/new` – register a household
 - `/intake/<id>` – edit a household and members
+- `/intake` – household intake form
+
 
 ## Tests
 
