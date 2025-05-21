@@ -40,6 +40,16 @@ Run the development server with:
 python run.py
 ```
 
+### Default Admin Account
+
+When the server starts it ensures an administrator exists. If no admin user is
+found, one is created automatically with the credentials:
+
+- **Email:** `admin@example.com`
+- **Password:** `password`
+
+Log in with this account and create additional users from the admin dashboard.
+
 The main routes are:
 
 - `/` – simple greeting
