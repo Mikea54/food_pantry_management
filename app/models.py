@@ -26,6 +26,15 @@ class Household(db.Model):
     eligibility_status = db.Column(db.String(50))
     member_count = db.Column(db.Integer, default=1)
 
+    @property
+    def name(self) -> str:
+        """Alias for head_name to maintain backward compatibility."""
+        return self.head_name
+
+    @name.setter
+    def name(self, value: str) -> None:
+        self.head_name = value
+
     members = db.relationship(
         "HouseholdMember",
         backref="household",
