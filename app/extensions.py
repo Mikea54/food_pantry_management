@@ -1,5 +1,5 @@
 from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
+from models import db as base_db
 
 login_manager = LoginManager()
-db = SQLAlchemy()
+db = base_db

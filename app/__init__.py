@@ -24,7 +24,7 @@ def create_app():
     from .admin import admin_bp
     from .user import user_bp
     from .intake import intake_bp
-    from pantry.households import household_bp  # Preferred version
+    from .households import household_bp  # Use DB-backed version
 
     app.register_blueprint(bp)
     app.register_blueprint(auth_bp)
