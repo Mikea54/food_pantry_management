@@ -3,17 +3,26 @@ from .extensions import db, login_manager
 from .models import User
 from .routes import bp
 from config import Config
+import sys
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     app.config['SECRET_KEY'] = 'dev'  # Optional if already set in Config
 
+    if 'pytest' in sys.modules:
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+
     # Initialize extensions
     db.init_app(app)
     login_manager.init_app(app)
     login_manager.session_protection = 'strong'
     login_manager.login_view = 'auth.login'
+
+    if app.config.get("TESTING"):
+        with app.app_context():
+            db.drop_all()
+            db.create_all()
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -24,7 +33,7 @@ def create_app():
     from .admin import admin_bp
     from .user import user_bp
     from .intake import intake_bp
-    from pantry.households import household_bp  # Preferred version
+    from .households import household_bp
 
     app.register_blueprint(bp)
     app.register_blueprint(auth_bp)

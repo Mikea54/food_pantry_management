@@ -3,11 +3,26 @@ from flask_login import login_required
 
 from .extensions import db
 from .models import Household, HouseholdMember
-from .forms import HouseholdForm, HouseholdMemberForm
+from .forms import (
+    HouseholdForm,
+    HouseholdMemberForm,
+    HouseholdIntakeForm,
+)
 
 intake_bp = Blueprint('intake', __name__)
 
-@intake_bp.route('/intake')
+
+@intake_bp.route('/intake', methods=['GET', 'POST'])
+def household_intake():
+    """Simple form to quickly capture household info."""
+    form = HouseholdIntakeForm()
+    if form.validate_on_submit():
+        flash('Household information submitted', 'success')
+        return redirect(url_for('intake.household_intake'))
+    return render_template('household_intake.html', form=form)
+
+
+@intake_bp.route('/intake/list')
 @login_required
 def list_households():
     page = request.args.get('page', 1, type=int)
@@ -32,7 +47,9 @@ def new_household():
 @login_required
 def household_detail(household_id):
     household = Household.query.get_or_404(household_id)
-    form = HouseholdForm(obj=household)
+    form = HouseholdForm()
+    if request.method == 'GET':
+        form.name.data = household.name
     member_form = HouseholdMemberForm()
     if form.submit.data and form.validate_on_submit():
         household.name = form.name.data
