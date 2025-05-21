@@ -1,16 +1,8 @@
-<!doctype html>
-<title>Households</title>
+{% extends 'base.html' %}
+{% block title %}Households{% endblock %}
+{% block content %}
 <h1>Households</h1>
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <ul>
-    {% for category, message in messages %}
-      <li>{{ category }} - {{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-<table border="1">
+<table class="table table-bordered">
     <tr>
         <th>ID</th>
         <th>Name</th>
@@ -32,3 +24,4 @@
     {% endif %}
 </div>
 <a href="{{ url_for('intake.new_household') }}">Create New Household</a>
+{% endblock %}

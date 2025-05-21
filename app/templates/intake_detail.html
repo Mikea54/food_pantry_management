@@ -1,5 +1,6 @@
-<!doctype html>
-<title>Household Detail</title>
+{% extends 'base.html' %}
+{% block title %}Household Detail{% endblock %}
+{% block content %}
 <h1>Household {{ household.id }}</h1>
 <form method="post">
     {{ form.hidden_tag() }}
@@ -7,7 +8,7 @@
         {{ form.name.label }}<br>
         {{ form.name(size=32) }}
     </p>
-    <p>{{ form.submit() }}</p>
+    <p>{{ form.submit(class_='btn btn-primary') }}</p>
 </form>
 <h2>Members</h2>
 <ul>
@@ -21,15 +22,7 @@
         {{ member_form.name.label }}<br>
         {{ member_form.name(size=32) }}
     </p>
-    <p>{{ member_form.submit() }}</p>
+    <p>{{ member_form.submit(class_='btn btn-secondary') }}</p>
 </form>
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <ul>
-    {% for category, message in messages %}
-      <li>{{ category }} - {{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
 <a href="{{ url_for('intake.list_households') }}">Back to list</a>
+{% endblock %}

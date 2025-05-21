@@ -1,39 +1,35 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Households</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-</head>
-<body>
-<div class="container mt-4">
-    <h1>Households</h1>
-    <a href="{{ url_for('household.export_households_csv') }}" class="btn btn-primary mb-3">Export CSV</a>
-    <table id="households" class="table table-striped">
-        <thead>
-        <tr>
-            <th>Head Name</th>
-            <th>Contact Phone</th>
-            <th>Address</th>
-            <th>Eligibility Status</th>
-            <th>Member Count</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for h in households %}
-        <tr>
-            <td>{{ h.head_name }}</td>
-            <td>{{ h.contact_phone }}</td>
-            <td>{{ h.address }}</td>
-            <td>{{ h.eligibility_status }}</td>
-            <td>{{ h.member_count }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
-
+{% extends 'base.html' %}
+{% block title %}Households{% endblock %}
+{% block head %}
+<link href="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<h1>Households</h1>
+<a href="{{ url_for('household.export_households_csv') }}" class="btn btn-primary mb-3">Export CSV</a>
+<table id="households" class="table table-striped">
+    <thead>
+    <tr>
+        <th>Head Name</th>
+        <th>Contact Phone</th>
+        <th>Address</th>
+        <th>Eligibility Status</th>
+        <th>Member Count</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for h in households %}
+    <tr>
+        <td>{{ h.head_name }}</td>
+        <td>{{ h.contact_phone }}</td>
+        <td>{{ h.address }}</td>
+        <td>{{ h.eligibility_status }}</td>
+        <td>{{ h.member_count }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+{% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/datatables.net@1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.13.6/js/dataTables.bootstrap5.min.js"></script>
@@ -44,5 +40,4 @@ $(function() {
     });
 });
 </script>
-</body>
-</html>
+{% endblock %}
