@@ -41,7 +41,6 @@ class Household(db.Model):
     address = db.Column(db.String(200))
     eligibility_status = db.Column(db.String(50))
     member_count = db.Column(db.Integer, default=1)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     members = db.relationship('HouseholdMember', backref='household', lazy=True, cascade="all, delete-orphan")
 
@@ -52,5 +51,3 @@ class HouseholdMember(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     household_id = db.Column(db.Integer, db.ForeignKey('household.id'), nullable=False)
     name = db.Column(db.String(100))
-    age = db.Column(db.Integer)
-    relation = db.Column(db.String(50))
